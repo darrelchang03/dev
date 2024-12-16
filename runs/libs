@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+sudo apt -y update
+sudo apt -y install git ripgrep xclip tldr jq python3-pip stow
+
+git clone https://github.com/junegunn/fzf.git $HOME/personal/fzf
+$HOME/personal/fzf/install
