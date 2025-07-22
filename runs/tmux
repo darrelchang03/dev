@@ -1,3 +1,4 @@
 #!/usr/bin/env bash
+. ./pkg.sh
 
-sudo apt install tmux
+PKG_INSTALL tmux

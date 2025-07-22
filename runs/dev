@@ -1,2 +1,6 @@
 #!/usr/bin/env bash
-sudo apt install stow
+
+# Load package manager abstraction
+. ./pkg.sh
+
+PKG_INSTALL stow
