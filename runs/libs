@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
-source ./pkg.sh
+#source ../pkg.sh
 
-. ./pkg.sh   # or full path
+bash ../pkg.sh
 
 PKG_INSTALL git wget ripgrep xclip tldr jq python3-pip stow
 

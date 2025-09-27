@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
-. ./pkg.sh
+
+bash ../pkg.sh
 
 PKG_INSTALL tmux

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-. ./pkg.sh
+bash ../pkg.sh
 
 PKG_INSTALL unzip
 wget --output-document /tmp/luarocks.tar.gz https://luarocks.org/releases/luarocks-3.11.0.tar.gz

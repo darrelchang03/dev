@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+bash ../pkg.sh
+
 version="v0.10.2"
 if [ ! -z $NVIM_VERSION ]; then
     version="$NVIM_VERSION"
@@ -13,7 +15,7 @@ fi
 
 . ./pkg.sh
 
-PKG_INSTALL cmake gettext lua5.1 liblua5.1-0-dev
+PKG_INSTALL cmake gettext lua51 liblua5.1-0-dev
 
 #git -C ~/neovim fetch --all
 #git -C ~/neovim checkout $version
