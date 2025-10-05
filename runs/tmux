@@ -3,3 +3,5 @@
 bash ../pkg.sh
 
 PKG_INSTALL tmux
+
+git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
