@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 
-# Load package manager abstraction
-bash ../pkg.sh
+source ../pkg.sh
 
 PKG_INSTALL stow

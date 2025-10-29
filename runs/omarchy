@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+set -e
+
+# Update packages
+sudo pacman -Syu --noconfirm
+
+# NetworkManager
+sudo pacman -S --noconfirm networkmanager network-manager-applet
+sudo systemctl enable NetworkManager.service
+sudo systemctl start NetworkManager.service
+systemctl --no-pager --full status NetworkManager.service
+
+# Sunsetr
+paru -S sunsetr-bin
