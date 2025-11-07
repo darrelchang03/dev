@@ -12,7 +12,4 @@ sudo systemctl start NetworkManager.service
 systemctl --no-pager --full status NetworkManager.service
 
 # Sunsetr
-yay -S sunsetr-bin wdisplays --noconfirm
-
-# Install wl-distore to save displays configs
-# wl-distore save-config to save
+yay -S sunsetr-bin nwg-displays --noconfirm
