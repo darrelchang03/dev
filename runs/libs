@@ -1,8 +1,6 @@
 #!/usr/bin/env bash
 
-source ../pkg.sh
-
-PKG_INSTALL git wget ripgrep xclip tldr jq python3-pip stow
+pacman -S git wget ripgrep xclip tldr jq python3-pip stow luarocks
 
 git clone https://github.com/junegunn/fzf.git $HOME/.local/bin/fzf
 $HOME/.local/bin/fzf/install

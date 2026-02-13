@@ -13,3 +13,9 @@ systemctl --no-pager --full status NetworkManager.service
 
 # Sunsetr
 yay -S sunsetr-bin nwg-displays --noconfirm
+
+# Auto theme manager Tema
+yay -S tema-git
+
+# Display manager
+yay -S hyprmon-bin

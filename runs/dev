@@ -1,5 +1,3 @@
 #!/usr/bin/env bash
 
-source ../pkg.sh
-
-PKG_INSTALL stow
+pacman -S stow

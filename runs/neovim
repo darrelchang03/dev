@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-source ../pkg.sh
-
 version="v0.10.2"
 if [ ! -z $NVIM_VERSION ]; then
     version="$NVIM_VERSION"
@@ -13,9 +11,7 @@ if [ ! -d $HOME/neovim ]; then
     git clone https://github.com/neovim/neovim.git $HOME/neovim
 fi
 
-. ./pkg.sh
-
-PKG_INSTALL cmake gettext lua51 liblua5.1-0-dev
+pacman -S cmake gettext lua51 liblua5.1-0-dev
 
 #git -C ~/neovim fetch --all
 #git -C ~/neovim checkout $version
