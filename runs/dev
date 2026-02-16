@@ -1,3 +1,18 @@
 #!/usr/bin/env bash
 
-pacman -S stow
+sudo pacman -S stow 
+
+# File explorer
+sudo pacman -S yazi ffmpeg 7zip jq fd ripgrep fzf zoxide resvg imagemagick
+
+# ffmpeg (for video thumbnails)
+# 7-Zip (for archive extraction and preview, requires non-standalone version)
+# jq (for JSON preview)
+# poppler (for PDF preview)
+# fd (for file searching)
+# rg (for file content searching)
+# fzf (for quick file subtree navigation, >= 0.53.0)
+# zoxide (for historical directories navigation, requires fzf)
+# resvg (for SVG preview)
+# ImageMagick (for Font, HEIC, and JPEG XL preview, >= 7.1.1)
+# xclip / wl-clipboard / xsel (for Linux clipboard support)

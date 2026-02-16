@@ -2,7 +2,7 @@
 
 source ../pkg.sh
 
-pacman -S zsh
+sudo pacman -S zsh
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
 # Zsh plugins

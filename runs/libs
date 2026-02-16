@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-pacman -S git wget ripgrep xclip tldr jq python3-pip stow luarocks
+sudo pacman -S git wget ripgrep xclip tldr jq python3-pip luarocks
 
 git clone https://github.com/junegunn/fzf.git $HOME/.local/bin/fzf
 $HOME/.local/bin/fzf/install

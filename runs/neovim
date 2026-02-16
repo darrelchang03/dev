@@ -11,11 +11,11 @@ if [ ! -d $HOME/neovim ]; then
     git clone https://github.com/neovim/neovim.git $HOME/neovim
 fi
 
-pacman -S cmake gettext lua51 liblua5.1-0-dev
+sudo pacman -S cmake gettext lua51
 
-#git -C ~/neovim fetch --all
-#git -C ~/neovim checkout $version
+git -C ~/neovim fetch --all
+git -C ~/neovim checkout $version
 
-#make -C ~/neovim clean
-#make -C ~/neovim CMAKE_BUILD_TYPE=RelWithDebInfo
-#sudo make -C ~/neovim install
+make -C ~/neovim clean
+make -C ~/neovim CMAKE_BUILD_TYPE=RelWithDebInfo
+sudo make -C ~/neovim install
