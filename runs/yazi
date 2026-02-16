@@ -1,7 +1,9 @@
+#!/usr/bin/env bash
+
 # File explorer
 sudo pacman -S yazi ffmpeg 7zip jq fd ripgrep fzf zoxide resvg imagemagick
 
-ya pkg add dedukun/relative-motions
+#ya pkg add dedukun/relative-motions
 
 # ffmpeg (for video thumbnails)
 # 7-Zip (for archive extraction and preview, requires non-standalone version)
