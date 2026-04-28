@@ -11,7 +11,7 @@ if [ ! -d $HOME/neovim ]; then
     git clone https://github.com/neovim/neovim.git $HOME/neovim
 fi
 
-sudo pacman -S cmake gettext lua51
+sudo pacman -S cmake gettext lua51 tree-sitter-cli
 
 git -C ~/neovim fetch --all
 git -C ~/neovim checkout $version
