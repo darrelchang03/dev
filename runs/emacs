@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+sudo pacman -S emacs-wayland
+
+git clone --depth 1 https://github.com/doomemacs/core ~/.config/emacs
+~/.config/emacs/bin/doom install
