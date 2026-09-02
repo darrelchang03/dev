@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+set -e
+
+# Language servers for every :lang module with +lsp enabled in
+# ~/.dotfiles/doom/.config/doom/init.el
+
+sudo pacman -S --needed --noconfirm \
+    clang \
+    typescript \
+    typescript-language-server \
+    pyright \
+    yaml-language-server
+
+# clang                       -> clangd, for (cc +lsp +tree-sitter)
+# typescript                  -> for (javascript +lsp +tree-sitter)
+# typescript-language-server  -> for (javascript +lsp +tree-sitter)
+# pyright                     -> for (python +lsp +pyright +tree-sitter)
+# yaml-language-server        -> for (yaml +lsp +tree-sitter)
+
+yay -S --needed --noconfirm vscode-langservers-extracted
+# vscode-langservers-extracted -> vscode-json-language-server, for (json +lsp +tree-sitter)
+#                                  vscode-html/css-language-server, for (web +lsp +tree-sitter)
