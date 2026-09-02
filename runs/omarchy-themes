@@ -1,0 +1,50 @@
+#!/usr/bin/env bash
+
+set -e
+
+# Extra Omarchy themes -- the ones installed from a git repo, as listed by
+# `omarchy theme extras`. They get cloned into ~/.config/omarchy/themes/.
+#
+# Not in notes.org; these URLs come from the `git remote` of each existing
+# clone. Themes shipped with Omarchy, and Tema (installed as tema-git by the
+# `omarchy` run script), are not git themes and are deliberately absent.
+#
+# Safe to re-run: a theme already present is skipped. That guard matters more
+# than it does for plugins, because `omarchy theme install` rm -rf's any
+# existing copy before re-cloning, and applies each theme as it lands. An
+# unguarded run would discard local tweaks and leave the last theme active.
+
+# Remember the active theme, so installing does not change it.
+original_theme=$(omarchy theme current 2>/dev/null || true)
+
+# install_theme <theme-name> <git-url>
+# theme-name has to match the name Omarchy derives from the URL: the repo
+# basename, minus a leading "omarchy-", a trailing "-theme", and ".git".
+install_theme() {
+    local name="$1" url="$2"
+
+    if [[ -d "$HOME/.config/omarchy/themes/$name" ]]; then
+        echo "already installed, skipping: $name"
+        return
+    fi
+
+    echo "installing: $name"
+    omarchy theme install "$url"
+}
+
+install_theme aetheria https://github.com/JJDizz1L/aetheria.git
+install_theme bauhaus https://github.com/somerocketeer/omarchy-bauhaus-theme.git
+install_theme lowlight https://github.com/atif-1402/omarchy-lowlight-theme
+install_theme monokai https://github.com/bjarneo/omarchy-monokai-theme.git
+install_theme sakura https://github.com/bjarneo/omarchy-sakura-theme.git
+
+# Each install applies the theme it just cloned, so put back the one that was
+# active beforehand.
+if [[ -n $original_theme && "$(omarchy theme current 2>/dev/null || true)" != "$original_theme" ]]; then
+    echo "restoring active theme: $original_theme"
+    omarchy theme set "$original_theme"
+fi
+
+echo
+echo "Done. Git-installed themes:"
+omarchy theme extras | sed 's|.*/|  |'

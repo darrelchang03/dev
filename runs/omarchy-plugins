@@ -1,0 +1,124 @@
+#!/usr/bin/env bash
+
+set -e
+
+# Omarchy shell plugins, transcribed from the "Omarchy Plugins" section of
+# ~/org/notes.org. Every one is third-party and gets cloned into
+# ~/.config/omarchy/plugins/ by `omarchy plugin add`.
+#
+# Safe to re-run: plugins that are already installed are skipped, and so are
+# built-in widgets that are already disabled.
+
+installed_ids=""
+plugin_added=0
+
+refresh_installed() {
+    installed_ids=$(omarchy plugin list | awk '{ print $1 }')
+}
+
+# add_plugin <plugin-id> <git-url> [extra flags for `omarchy plugin add`]
+# Sets plugin_added=1 when it actually installed something, so callers can
+# guard one-time post-install steps.
+add_plugin() {
+    local id="$1" url="$2"
+    shift 2
+
+    plugin_added=0
+
+    if echo "$installed_ids" | grep -Fxq "$id"; then
+        echo "already installed, skipping: $id"
+        return
+    fi
+
+    echo "installing: $id"
+    omarchy plugin add "$url" "$@" --yes
+    plugin_added=1
+    refresh_installed
+}
+
+# disable_plugin <plugin-id> -- for built-ins replaced by a third-party widget
+disable_plugin() {
+    local id="$1" state
+
+    state=$(omarchy plugin list | awk -v id="$id" '$1 == id { print $2 }')
+
+    if [[ $state != "enabled" ]]; then
+        echo "already disabled, skipping: $id"
+        return
+    fi
+
+    echo "disabling: $id"
+    omarchy plugin disable "$id"
+}
+
+refresh_installed
+
+# Meteobar -- weather in the bar. Needs the meteobar binary from the AUR, and
+# supersedes Omarchy's built-in weather widget.
+yay -S --needed --noconfirm meteobar-bin
+add_plugin mryll.meteobar https://github.com/mryll/meteobar.git --enable
+disable_plugin omarchy.weather
+
+# HyprmonCfg -- monitor configuration. Supersedes the built-in display widget.
+add_plugin crmne.hyprmoncfg https://github.com/crmne/omarchy-hyprmoncfg.git --enable
+disable_plugin omarchy.monitor
+
+# Notification Center
+add_plugin jankeesvw.notification-center \
+    https://github.com/jankeesvw/omarchy-notification-center.git --enable
+
+# Omaland -- hyprland config editor
+add_plugin bobbynicholas.omaland https://github.com/bobby-nicholas/omaland.git --enable
+
+# Omarchy Spotify
+add_plugin quickshell.spotify https://github.com/stappmus/Omarchy-Spotify.git --enable
+
+# Syncthing
+add_plugin io.github.ilyazar.syncthing https://github.com/ilyaZar/syncshell.git --enable
+
+# Lock screen explorer -- browse lock designs with `omarchy-shell lock explore`
+add_plugin io.github.sirjul1337.lock-explorer \
+    https://github.com/SirJul1337/omarchy-lock-explorer.git --enable
+
+# Its extras installer adds the launcher entry under Style > Lock Screen. Only
+# run on a fresh install, so repeat runs don't add the entry twice.
+lock_explorer_extras="$HOME/.config/omarchy/plugins/io.github.sirjul1337.lock-explorer/extras/install.sh"
+if [[ $plugin_added == 1 && -x $lock_explorer_extras ]]; then
+    echo "installing lock-explorer launcher entry"
+    "$lock_explorer_extras"
+fi
+
+# Omarchy Dictionary
+add_plugin tristonarmstrong.dictionary \
+    https://github.com/tristonarmstrong/omarchy-dictionary.git --enable
+
+# omaplug
+add_plugin omaplug https://github.com/fross100/omaplug.git --enable
+
+# Lookelsewhere
+add_plugin io.github.silouanwright.look-elsewhere \
+    https://github.com/silouanwright/lookelsewhere.git --enable
+
+# BlueFerry -- the plugin is only a front end; the blueferry backend has to be
+# built from source first.
+if ! command -v blueferry &>/dev/null; then
+    echo "building blueferry backend from source"
+    sudo pacman -S --needed --noconfirm base-devel python
+
+    build_dir=$(mktemp -d)
+    git clone https://github.com/erikwb/blueferry.git "$build_dir/blueferry"
+    (cd "$build_dir/blueferry" && ./build.sh -si)
+    rm -rf "$build_dir"
+else
+    echo "blueferry backend already built, skipping"
+fi
+
+add_plugin io.weirdware.blueferry https://github.com/erikwb/omarchy-blueferry.git --enable
+
+# Once blueferry is paired, populate it with:
+#   blueferry sms-list       # loads conversations
+#   blueferry contacts-sync  # syncs contacts
+
+echo
+echo "Done. Installed third-party plugins:"
+omarchy plugin list | awk '$3 == "third-party" { printf "  %-40s %s\n", $1, $2 }'
